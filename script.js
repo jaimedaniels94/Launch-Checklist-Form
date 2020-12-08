@@ -12,7 +12,7 @@
 <img src="${}">
 */
 
-window.addEventListener("load", function () {
+main () {
   let form = document.querySelector("form");
   form.addEventListener("submit", function (event) {
     let pilotNameInput = document.querySelector("input[name=pilotName]");
@@ -28,5 +28,20 @@ window.addEventListener("load", function () {
       alert("All fields required.");
       event.preventDefault();
     }
+    if (
+      isNaN(fuelLevelInput.value) === true ||
+      isNaN(cargoMassInput.value) === true
+    ) {
+      alert("Please enter a number");
+      event.preventDefault();
+    }
+    if (
+      isNaN(pilotNameInput.value) === false ||
+      isNaN(copilotNameInput.value) === false
+    ) {
+      alert("Please enter a string");
+    }
   });
-});
+};
+
+window.addEventListener("load", main)
