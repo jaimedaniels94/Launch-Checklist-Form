@@ -55,6 +55,10 @@ function main() {
     let cargoMassInput = document.querySelector("input[name=cargoMass]");
     fuelLevelInput = Number(fuelLevelInput.value);
     cargoMassInput = Number(cargoMassInput.value);
+    let letters = /^[A-Za-z]+$/;
+
+    pilotNameEl.innerText = `Pilot ${pilotNameInput.value} is ready`;
+    copilotNameEl.innerText = `Co-pilot ${copilotNameInput.value} is ready`;
 
     if (
       pilotNameInput.value === "" ||
@@ -63,33 +67,33 @@ function main() {
       cargoMassInput.value === ""
     ) {
       alert("All fields required.");
+      launchStatus.innerText = `Awaiting Information Before Launch`;
+      faultyItems.style.visibility = "hidden";
       event.preventDefault();
-    }
-
-    if (
-      isNaN(pilotNameInput.value) === false ||
-      isNaN(copilotNameInput.value) === false
+    } else if (
+      !pilotNameInput.value.match(letters) ||
+      !copilotNameInput.value.match(letters)
     ) {
       alert("Please enter a valid string");
-    }
-
-    pilotNameEl.innerText = `Pilot ${pilotNameInput.value} is ready`;
-    copilotNameEl.innerText = `Co-pilot ${copilotNameInput.value} is ready`;
-    event.preventDefault();
-
-    if (fuelLevelInput < 10000) {
+      launchStatus.innerText = `Awaiting Information Before Launch`;
+      faultyItems.style.visibility = "hidden";
+      event.preventDefault();
+    } else if (fuelLevelInput < 10000) {
       faultyItems.style.visibility = "visible";
       fuelLevelEl.innerText = `Not enough fuel for the journey`;
       launchStatus.innerText = `Shuttle not ready for launch`;
       launchStatus.style = "color: red;";
+      event.preventDefault();
     } else if (cargoMassInput > 10000) {
       faultyItems.style.visibility = "visible";
       cargoMassEl.innerText = `Too much mass for takeoff`;
       launchStatus.innerText = `Shuttle not ready for launch`;
       launchStatus.style.color = "red";
+      event.preventDefault();
     } else {
       launchStatus.style.color = "green";
       launchStatus.innerText = `Shuttle is ready for launch`;
+      event.preventDefault();
     }
   });
 }
